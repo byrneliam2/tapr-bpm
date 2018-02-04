@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,9 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView myTextView = (TextView) findViewById(R.id.BPMView);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Raleway-Regular.ttf");
-        myTextView.setTypeface(typeface);
+        setTextViewFonts();
     }
 
     @Override
@@ -31,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
+    private void setTextViewFonts() {
+        // Horrible way to achieve this, but we don't have many views to work with here, so it's okay...?
+        int[] views = {R.id.BPMView, R.id.CountView};
+        for (int view : views) {
+            TextView tv = (TextView) findViewById(view);
+            tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Raleway-Regular.ttf"));
         }
     }
 }
