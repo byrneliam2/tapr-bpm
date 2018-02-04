@@ -3,9 +3,11 @@ package com.byrneliam2.taprbpm;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Toast.makeText(getApplicationContext(), "Touch!", Toast.LENGTH_SHORT).show();
+        return super.onTouchEvent(event);
     }
 
     private void setTextViewFonts() {
