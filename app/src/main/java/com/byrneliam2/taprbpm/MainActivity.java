@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.Locale;
-import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements
     GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat gd;
 
-    private long time = 0L;
+    private long lastTime = 0L;
     private float bpm = 0F;
     private int taps = 0;
 
@@ -48,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements
     /* ============================================================================= */
 
     private void calculateBPM(long newTime) {
-        bpm = 60000f/(newTime - time);
-        time = System.currentTimeMillis();
+        bpm = 60000f/(newTime - lastTime);
+        lastTime = System.currentTimeMillis();
     }
 
     private void resetAll() {
         bpm = taps = 0;
-        time = 0L;
+        lastTime = 0L;
     }
 
     /* ============================================================================= */
@@ -71,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements
         TextView tvb = ((TextView) findViewById(R.id.BPMView));
         TextView tvc = ((TextView) findViewById(R.id.CountView));
 
-        if (time == 0L) {
-            time = System.currentTimeMillis();
+        if (lastTime == 0L) {
+            lastTime = System.currentTimeMillis();
             tvb.setText(getString(R.string.first_beat));
         } else {
             calculateBPM(System.currentTimeMillis());
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements
     public void onLongPress(MotionEvent motionEvent) {
         resetAll();
 
-        TextView tvb = ((TextView) findViewById(R.id.BPMView));
         TextView tvc = ((TextView) findViewById(R.id.CountView));
 
         tvc.setText(String.format(Locale.getDefault(), "%d", taps));
