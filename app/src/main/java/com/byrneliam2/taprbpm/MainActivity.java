@@ -8,15 +8,17 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements
     GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat gd;
+    private Timer timer;
 
+    private float bpm = 0f;
     private int taps = 0;
 
     @Override
@@ -43,6 +45,18 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /* ============================================================================= */
+
+    private void calculateBPM() {
+
+    }
+
+    private void resetAll() {
+        bpm = taps = 0;
+    }
+
+    /* ============================================================================= */
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return gd.onTouchEvent(event);
@@ -51,37 +65,38 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onDown(MotionEvent motionEvent) {
         if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) return false;
-        //Toast.makeText(this, "Touch!", Toast.LENGTH_SHORT).show();
-        ((TextView) findViewById(R.id.CountView)).setText(String.format(Locale.getDefault(), "%d", ++taps));
+
+        TextView tvb = ((TextView) findViewById(R.id.BPMView));
+        TextView tvc = ((TextView) findViewById(R.id.CountView));
+        tvc.setText(String.format(Locale.getDefault(), "%d", ++taps));
+
         return true;
     }
 
-    @Override
-    public void onShowPress(MotionEvent motionEvent) {
-
+    @Override public void onShowPress(MotionEvent motionEvent) {
     }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent motionEvent) {
+    @Override public boolean onSingleTapUp(MotionEvent motionEvent) {
         return false;
     }
-
-    @Override
-    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+    @Override public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
         return false;
     }
 
     @Override
     public void onLongPress(MotionEvent motionEvent) {
-        //Toast.makeText(this, "Long touch!", Toast.LENGTH_SHORT).show();
-        taps = 0;
-        ((TextView) findViewById(R.id.CountView)).setText(String.format(Locale.getDefault(), "%d", taps));
+        resetAll();
+
+        TextView tvb = ((TextView) findViewById(R.id.BPMView));
+        TextView tvc = ((TextView) findViewById(R.id.CountView));
+        tvc.setText(String.format(Locale.getDefault(), "%d", taps));
     }
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
         return false;
     }
+
+    /* ============================================================================= */
 
     private void setTextViewFonts() {
         // Horrible way to achieve this, but we don't have many views to work with here, so it's okay...?
