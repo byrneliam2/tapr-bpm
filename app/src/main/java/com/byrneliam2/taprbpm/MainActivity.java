@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private GestureDetectorCompat gd;
 
+    private int taps = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onDown(MotionEvent motionEvent) {
         if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) return false;
-        Toast.makeText(this, "Touch!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Touch!", Toast.LENGTH_SHORT).show();
+        ((TextView) findViewById(R.id.CountView)).setText(Integer.toString(++taps));
         return true;
     }
 
@@ -68,7 +71,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLongPress(MotionEvent motionEvent) {
-        Toast.makeText(this, "Long touch!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Long touch!", Toast.LENGTH_SHORT).show();
+        taps = 0;
+        ((TextView) findViewById(R.id.CountView)).setText(Integer.toString(taps));
     }
 
     @Override
