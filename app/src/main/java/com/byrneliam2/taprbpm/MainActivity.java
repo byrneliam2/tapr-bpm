@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity implements
     GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat gd;
-    private Timer timer;
 
-    private float bpm = 0f;
+    private long time = 0L;
+    private float bpm = 0F;
     private int taps = 0;
 
     @Override
@@ -47,12 +47,14 @@ public class MainActivity extends AppCompatActivity implements
 
     /* ============================================================================= */
 
-    private void calculateBPM() {
-
+    private void calculateBPM(long newTime) {
+        bpm = 60000f/(newTime - time);
+        time = System.currentTimeMillis();
     }
 
     private void resetAll() {
         bpm = taps = 0;
+        time = 0L;
     }
 
     /* ============================================================================= */
@@ -68,6 +70,15 @@ public class MainActivity extends AppCompatActivity implements
 
         TextView tvb = ((TextView) findViewById(R.id.BPMView));
         TextView tvc = ((TextView) findViewById(R.id.CountView));
+
+        if (time == 0L) {
+            time = System.currentTimeMillis();
+            tvb.setText(getString(R.string.first_beat));
+        } else {
+            calculateBPM(System.currentTimeMillis());
+            tvb.setText(String.format(Locale.getDefault(), "%.1f", bpm));
+        }
+
         tvc.setText(String.format(Locale.getDefault(), "%d", ++taps));
 
         return true;
@@ -88,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements
 
         TextView tvb = ((TextView) findViewById(R.id.BPMView));
         TextView tvc = ((TextView) findViewById(R.id.CountView));
+
         tvc.setText(String.format(Locale.getDefault(), "%d", taps));
     }
 
