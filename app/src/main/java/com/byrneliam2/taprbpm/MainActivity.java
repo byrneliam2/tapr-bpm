@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements
     GestureDetector.OnGestureListener {
 
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onDown(MotionEvent motionEvent) {
         if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) return false;
         //Toast.makeText(this, "Touch!", Toast.LENGTH_SHORT).show();
-        ((TextView) findViewById(R.id.CountView)).setText(Integer.toString(++taps));
+        ((TextView) findViewById(R.id.CountView)).setText(String.format(Locale.getDefault(), "%d", ++taps));
         return true;
     }
 
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onLongPress(MotionEvent motionEvent) {
         //Toast.makeText(this, "Long touch!", Toast.LENGTH_SHORT).show();
         taps = 0;
-        ((TextView) findViewById(R.id.CountView)).setText(Integer.toString(taps));
+        ((TextView) findViewById(R.id.CountView)).setText(String.format(Locale.getDefault(), "%d", taps));
     }
 
     @Override
