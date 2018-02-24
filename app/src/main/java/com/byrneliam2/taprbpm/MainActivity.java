@@ -16,9 +16,10 @@ public class MainActivity extends AppCompatActivity implements
 
     private GestureDetectorCompat gd;
 
+    private long totalTime = 0L;
     private long lastTime = 0L;
     private float bpm = 0F;
-    private int taps = 0;
+    private float taps = 0; // needs to be float to avoid integer division
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,14 @@ public class MainActivity extends AppCompatActivity implements
     /* ============================================================================= */
 
     private void calculateBPM(long newTime) {
-        bpm = 60000f/(newTime - lastTime);
+        totalTime += (60000f/(newTime - lastTime));
+        bpm = totalTime/taps;
         lastTime = System.currentTimeMillis();
     }
 
     private void resetAll() {
+        totalTime = lastTime = 0L;
         bpm = taps = 0;
-        lastTime = 0L;
     }
 
     /* ============================================================================= */
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
             tvb.setText(String.format(Locale.getDefault(), "%.1f", bpm));
         }
 
-        tvc.setText(String.format(Locale.getDefault(), "%d", ++taps));
+        tvc.setText(String.format(Locale.getDefault(), "%.0f", ++taps));
 
         return true;
     }
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements
 
         TextView tvc = ((TextView) findViewById(R.id.CountView));
 
-        tvc.setText(String.format(Locale.getDefault(), "%d", taps));
+        tvc.setText(String.format(Locale.getDefault(), "%.0f", taps));
     }
 
     @Override
