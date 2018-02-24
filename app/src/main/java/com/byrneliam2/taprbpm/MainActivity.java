@@ -1,9 +1,12 @@
 package com.byrneliam2.taprbpm;
 
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements
         bpm = taps = 0;
     }
 
+    private void changeBackgroundColour() {
+        View root = findViewById(R.id.BPMView).getRootView();
+        root.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+    }
+
     /* ============================================================================= */
 
     @Override
@@ -77,8 +85,12 @@ public class MainActivity extends AppCompatActivity implements
             tvb.setText(getString(R.string.first_beat));
         } else {
             calculateBPM(System.currentTimeMillis());
-            tvb.setText(String.format(Locale.getDefault(), "%.1f", bpm));
+            String s = String.format(Locale.getDefault(), "%.1f", bpm);
+            SpannableString ss = new SpannableString(s);
+            ss.setSpan(new RelativeSizeSpan(2f), 0,s.length()-2, 0); // set size
+            tvb.setText(ss);
         }
+        //changeBackgroundColour();
 
         tvc.setText(String.format(Locale.getDefault(), "%.0f", ++taps));
 

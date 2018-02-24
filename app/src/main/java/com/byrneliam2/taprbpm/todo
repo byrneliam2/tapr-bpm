@@ -6,7 +6,3 @@
 - SpannableString for BPM (1dp)
   SpannableString ss1=  new SpannableString(s);
   ss1.setSpan(new RelativeSizeSpan(2f), 0,5, 0); // set size
-
-- Calculating BPM
-  60000/time between taps
-  (Needs to be averaged)

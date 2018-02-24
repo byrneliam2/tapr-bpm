@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/CountView"
             android:text="@string/count"
+            android:textSize="16sp"
             app:layout_constraintVertical_bias="0.85"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
