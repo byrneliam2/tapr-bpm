@@ -2,7 +2,4 @@
 - Reset animation (wipe)
 - Dynamic background
 - Metronome sound?
-
-- SpannableString for BPM (1dp)
-  SpannableString ss1=  new SpannableString(s);
-  ss1.setSpan(new RelativeSizeSpan(2f), 0,5, 0); // set size
+- Reduce touch area to avoid top/bottom swipe
